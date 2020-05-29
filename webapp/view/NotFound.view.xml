@@ -1,0 +1,15 @@
+<mvc:View
+	height="100%"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	controllerName="gs.ZSO_Demo.controller.NotFound">
+	<MessagePage
+		id = "notFound"
+		showNavButton="true"
+		title="{i18n>pageTitle}"
+		text="{i18n>notFoundText}"
+		enableFormattedText="true"
+		description="{i18n>notFoundDesc}"
+		icon="sap-icon://sales-order"
+		navButtonPress=".onNavBack"/>
+</mvc:View>

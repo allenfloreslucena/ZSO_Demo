@@ -1,0 +1,152 @@
+<mvc:View
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	controllerName="gs.ZSO_Demo.controller.View">
+	<Page
+		id="view"
+		title="{i18n>pageTitle} {= parseInt(${Vbeln})} {i18n>oView}"
+		showNavButton="true"
+		class="sapUiResponsivePadding"	
+		navButtonPress=".onNavBack">
+		<content>
+			<PullToRefresh
+				id="pullToRefresh"
+				showIcon="true"
+				visible="{device>/isTouch}"
+				refresh="handleRefresh" />
+			<!-- BEGIN OF HEADER INFO -->
+			<Panel
+				headerText="{i18n>vHeader}"
+				width="auto"
+				class="sapUiResponsiveMargin">
+				<f:SimpleForm
+					id="form"
+					layout="ResponsiveGridLayout">
+					<f:content>
+						<Label text="{i18n>orderType}"/>
+						<Text text="{Auart}"/>
+						
+						<Label text="{i18n>salesOrg}"/>
+						<Text text="{Vkorg}"/>
+						
+						<Label text="{i18n>distChannel}"/>
+						<Text text="{Vtweg}"/>
+						
+						<Label text="{i18n>division}"/>
+						<Text text="{Spart}"/>
+						
+						<Label text="{i18n>soldTo}"/>
+						<Text text="{= parseInt(${Kunnr})}"/>
+						
+						<Label text="{i18n>PONumber}"/>
+						<Text text="{Bstnk}"/>
+					</f:content>
+				</f:SimpleForm>
+			</Panel>
+			<!-- END OF HEADER INFO -->
+						
+			<!-- BEGIN OF ITEM INFO -->
+			<Panel
+				headerText="{i18n>vItem}"
+				width="auto"
+				class="sapUiResponsiveMargin">
+				<content>
+					<Table
+						id="viewTable"
+						items="{SO_ITEMSet}"
+						growing="true"
+						growingThreshold="5"
+						growingScrollToLoad="false">
+						<!-- BEGIN OF TABLE HEADER -->
+						<!-- ITEM HEADER -->
+						<columns>
+							<Column>
+								<Text text="{i18n>item}" />
+							</Column>
+						
+						<!-- MATERIAL HEADER -->
+							<Column
+								minScreenWidth="Tablet"
+								demandPopin="true">
+								<Text text="{i18n>material}" />
+							</Column>
+						
+						<!-- QUANTITY HEADER -->
+							<Column
+								minScreenWidth="Desktop"
+								demandPopin="true">
+								<Text text="{i18n>qty}" />
+							</Column>
+						
+						<!-- UNIT HEADER -->
+							<Column
+								minScreenWidth="Desktop"
+								demandPopin="true">
+								<Text text="{i18n>uom}" />
+							</Column>
+						
+						<!-- PLANT HEADER -->
+							<Column
+								hAlign="Center"
+								minScreenWidth="Tablet"
+								demandPopin="true">
+								<Text text="{i18n>plant}" />
+							</Column>
+						
+						<!-- DELIVERY STATUS HEADER -->
+							<Column
+								hAlign="End">
+								<Text text="{i18n>status}" />
+							</Column>
+						</columns>
+						<!-- END OF TABLE HEADER -->
+						
+						<!-- BEGIN OF COLUMNS -->
+						<items>
+							<ColumnListItem id="itemlist">
+								<cells>
+									<!-- ITEM COOLUMN -->
+									<ObjectIdentifier
+										id="Item"
+										title="{= parseInt(${Posnr})}"/>
+									
+									<!-- MATERIAL COOLUMN -->
+									<Text
+										id="Material"
+										text="{Matnr}"/>
+									
+									<!-- QUANTITY COOLUMN -->
+									<Text
+										id="Quantity"
+										text="{= parseInt(${Kwmeng})}"/>
+									
+									<!-- UNIT COLUMN -->
+									<Text
+										id="Unit"
+										text="{Vrkme}"/>
+									
+									<!-- PLANT COOLUMN -->
+									<Text
+										id="Plant"
+										text="{Werks}"/>
+										
+									<!-- DELIVERY STATUS COOLUMN -->
+									<ObjectStatus
+										id="Status"
+										text="{Lfsta}"
+										state="{= ${Lfsta} === 'Fully delivered.' ? 'Success' :
+											${Lfsta} === 'Partially delivered.' ? 'Information' :
+											${Lfsta} === 'Not yet delivered.' ? 'Warning' : 'Error'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<!-- END OF COLUMNS -->
+					</Table>
+				</content>
+			</Panel>
+			<!-- END OF ITEM INFO -->			
+		</content>
+	</Page>
+</mvc:View>

@@ -1,0 +1,243 @@
+<mvc:View
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.ui.layout.form"
+	controllerName="gs.ZSO_Demo.controller.Home">
+	<Page id="home" title="{i18n>title}">
+		<content>
+			<IconTabBar
+				id="idTopLevelIconTabBar"
+				class="sapUiResponsiveContentPadding">
+				<!-- BEGIN OF TAB HEADER-->
+				<items>
+					<!-- BEGIN OF VIEW SALES ORDER TAB -->
+					<IconTabFilter id="view" text="{i18n>viewSalesOrderFilter}">
+						<f:SimpleForm
+							title="Sales Document"
+							editable="true"
+							layout="ResponsiveGridLayout">
+							<f:content>
+								<!-- SALES ORDER NUMBER FIELD -->
+								<Label text="{i18n>salesOrder}"/>
+								<!--maxLength="10"-->
+								<Input
+									id="inSONumber"
+									placeholder="Enter SO Number"
+									submit="onViewPress"
+									type="Number"
+									width="60%"
+									required="true"/>
+								<Button
+									visible="{= !${device>/system/desktop} }"
+									text="{i18n>view}"
+									type="Accept"
+									width="5rem"
+									press="onViewPress"/>
+							</f:content>
+						</f:SimpleForm>
+					</IconTabFilter>
+					<!-- END OF VIEW SALES ORDER TAB -->
+				
+					<!-- BEGIN OF CREATE SALES ORDER TAB -->
+					<IconTabFilter id="create" text="{i18n>createSalesOrderFilter}">
+						<!-- BEGIN OF HEADER INFO -->
+						<Panel
+							headerText="{i18n>headerInfo}"
+							width="auto"
+							class="sapUiResponsiveMargin">
+							<f:SimpleForm
+								editable="true"
+								layout="ResponsiveGridLayout">
+									<f:content>
+										<Label text="{i18n>orderType}"/>
+										<Input
+											id="inOrder"
+											maxLength="4"
+											width="30%"
+											required="true"/>
+										
+										<Label text="{i18n>salesOrg}"/>
+										<Input
+											id="inSalesOrg"
+											maxLength="4"
+											width="30%"/>
+										
+										<Label text="{i18n>distChannel}"/>
+										<Input
+											id="inDistChan"
+											maxLength="2"
+											width="30%"/>										
+										<Label text="{i18n>division}"/>
+										<Input
+											id="inDiv"
+											maxLength="2"
+											width="30%"/>
+										
+										<Label text="{i18n>soldTo}"/>
+										<Input
+											id="inSoldTo"
+											width="30%"
+											maxLength="10"
+											required="true"/>
+										
+										<Label text="{i18n>PONumber}"/>
+										<Input
+											id="inPONum"
+											maxLength="20"
+											width="30%"/>
+									</f:content>
+							</f:SimpleForm>	
+						</Panel>
+						<!-- END OF HEADER INFO -->
+						
+						<!-- BEGIN OF ITEM INFO -->
+						<Panel headerText="{i18n>itemInfo}" width="auto" class="sapUiResponsiveMargin">
+							<content>
+								<f:SimpleForm
+									editable="true"
+									layout="ResponsiveGridLayout">
+									<f:content>
+										<!-- ITEM FIELD -->
+										<Label text="{i18n>item}"/>
+										<Input
+											id="inItem"
+											type="Number"
+											width="30%"/>
+										
+										<!-- MATERIAL NUMBER FIELD -->
+										<Label text="{i18n>matnr}"/>
+										<Input
+											id="inMaterial"
+											maxLength="40"
+											width="30%"
+											required="true"/>
+										
+										<!-- QUANTITY FIELD -->
+										<Label text="{i18n>qty}"/>
+										<Input
+											id="inQuan"
+											maxLength="13"
+											width="30%"
+											required="true"/>	
+										
+										<!-- PLANT FIELD -->									
+										<Label text="{i18n>plant}"/>
+										<Input
+											id="inPlant"
+											maxLength="4"
+											width="30%"
+											required="true"/>
+									</f:content>
+								</f:SimpleForm>
+								<Toolbar height="3rem">
+									<Button
+										text="{i18n>add}"
+										icon="sap-icon://add"
+										type="Emphasized"
+										press="OnAdd"
+										class="sapUiResponsiveMargin"/>
+								</Toolbar>
+							</content>
+						</Panel>
+							<!-- END OF ITEM INFO -->
+							
+							<!-- BEGIN OF ITEM TABLE -->
+						<Panel headerText="Items" expandable="true" expanded="true" width="auto" class="sapUiResponsiveMargin">
+							<content>
+								<Table
+									id="packItem"
+									items="{/data}"
+									mode="MultiSelect"
+									growing="true"
+									growingThreshold="5"
+									growingScrollToLoad="false">
+									<!-- BEGIN OF TABLE HEADER -->
+									<!-- ITEM HEADER -->
+									<columns>
+										<Column>
+											<Text text="{i18n>item}" />
+										</Column>
+									
+									<!-- MATERIAL HEADER -->
+										<Column
+											minScreenWidth="Tablet"
+											demandPopin="true">
+											<Text text="{i18n>material}" />
+										</Column>
+									
+									<!-- QUANTITY HEADER -->
+										<Column
+											minScreenWidth="Tablet"
+											demandPopin="true">
+											<Text text="{i18n>qty}" />
+										</Column>
+									
+									<!-- PLANT HEADER -->
+										<Column
+											hAlign="End">
+											<Text text="{i18n>plant}" />
+										</Column>
+									</columns>
+									<!-- END OF TABLE HEADER -->
+									
+									<!-- BEGIN OF COLUMNS -->
+									<items>
+										<ColumnListItem>
+											<cells>
+												<!-- ITEM COOLUMN -->
+												<ObjectIdentifier
+													id="Item"
+													title="{Item}"/>
+													<!-- text="{Matnr}" -->
+													
+												<!-- MATERIAL COOLUMN -->
+												<Text
+													id="Material"
+													text="{Material}"/>
+												
+												<!-- QUANTITY COOLUMN -->
+													<!-- text="{Kwmeng}" -->
+												<Text
+													id="Quantity"
+													text="{Quantity}"/>
+												
+												<!-- PLANT COOLUMN -->
+												<Text
+													id="Plant"
+													text="{Plant}"/>
+												</cells>
+										</ColumnListItem>
+									</items>
+									<!-- END OF COLUMNS -->
+								</Table>
+								
+								<!-- BUTTON TOOLBAR -->
+								<Toolbar height="3rem">
+									<ToolbarSpacer/>
+									<Button
+										id="btnCreate"
+										enabled="false"
+										text="{i18n>create}"
+										type="Accept"
+										icon="sap-icon://outbox"
+										press="OnCreate"/> 
+									<Button
+										id="btnDelete"
+										enabled="true"
+										text="{i18n>delete}"
+										type="Reject"
+										icon="sap-icon://sys-minus"
+										press="onDelete"/> 
+								</Toolbar>
+							</content>
+						</Panel>
+						<!-- END OF ITEM TABLE -->
+					</IconTabFilter>
+					<!-- END OF CREATE SALES ORDER TAB -->
+				</items>
+				<!-- END OF TAB HEADER -->
+			</IconTabBar>
+		</content>
+	</Page>
+</mvc:View>
